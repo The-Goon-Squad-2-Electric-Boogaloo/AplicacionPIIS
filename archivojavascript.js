@@ -22,4 +22,28 @@ function openFibonacci() {
     document.getElementById("newtonForm").style.display="none";
   }
 
+  function openTesla() {
+    document.getElementById("teslaForm").style.display="block";
+  }
+
+  function closeTesla() {
+    document.getElementById("teslaForm").style.display="none";
+  }
+
+  function openTuring() {
+    document.getElementById("turingForm").style.display="block";
+  }
+
+  function closeTuring() {
+    document.getElementById("turingForm").style.display="none";
+  }
+
+  function openHelp() {
+    document.getElementById("helpForm").style.display="block";
+  }
+
+  function closeHelp() {
+    document.getElementById("helpForm").style.display="none";
+  }
+
  
