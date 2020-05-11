@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ClickerService } from'./clicker.service';
+import { Cientifico } from './cientifico';
 
 declare function openEinstein(): any;
 declare function openFibonacci(): any;
@@ -24,6 +27,8 @@ declare function openHelp(): any;
     newtonComprado:boolean = false;
     teslaComprado: boolean = false;
     turingComprado:boolean = false;
+    esconder:boolean = false;
+    foundganar:boolean = false;
     energiaActual:number = 0;
     energiaXClicActual:number = 1;
     energiaXClicPrevio:number = 1;
@@ -34,27 +39,23 @@ declare function openHelp(): any;
   
     //Parametros para coger la informacion de los centeficos 
     i:number = 0;
-    descCientifico:string [] = [];
-    nombreCientifico:string[] = [];
+    //descCientifico:string [] = [];
+    //nombreCientifico:string[] = [];
     rutaImagen:string [] = [];
     ruta:string = 'https://gameserver.centic.ovh';
-    preciosCientificos:number [] = [];
-    energiasCientificos:number [] = [];
-    
+    //preciosCientificos:number [] = [];
+    //energiasCientificos:number [] = [];
+    cientificos: Cientifico[] = [];
+   
+
     preciosFibonacci = [10, 50, 150, 300];
     indexPrecioActual = 0;
     precioMejoraFibonacci= this.preciosFibonacci[this.indexPrecioActual];
+  headers: string[];
 
-    constructor(private httpClient:HttpClient, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
+    constructor(private httpClient:HttpClient, private sanitizer: DomSanitizer, private rutaGanar: Router, private route: ActivatedRoute, private clickerService: ClickerService) {
 
-        this.getCentefico();
-
-    
-      }
-
-      ngOnInit(){
-
-        this.help();
+        this.getCientifico();
 
       }
 
@@ -112,10 +113,10 @@ declare function openHelp(): any;
     
       comprarEinstein(){
     
-        if (this.energiaActual >= this.preciosCientificos[0]){
+        if (this.energiaActual >= this.cientificos[0].precio){
     
           //Restar el precio de la compra
-          this.energiaActual = this.energiaActual - this.preciosCientificos[0];
+          this.energiaActual = this.energiaActual - this.cientificos[0].precio;
     
           this.addMultiplicadorXsegundo(5);
         
@@ -127,10 +128,10 @@ declare function openHelp(): any;
     
       comprarNewton(){
     
-        if (this.energiaActual >= this.preciosCientificos[1]){
+        if (this.energiaActual >= this.cientificos[1].precio){
     
           //Restar el precio de la compra
-          this.energiaActual = this.energiaActual - this.preciosCientificos[1];
+          this.energiaActual = this.energiaActual - this.cientificos[1].precio;
     
           this.addMultiplicadorXsegundo(10);
           
@@ -142,10 +143,10 @@ declare function openHelp(): any;
 
       comprarTesla(){
     
-        if (this.energiaActual >= this.preciosCientificos[2]){
+        if (this.energiaActual >= this.cientificos[2].precio){
     
           //Restar el precio de la compra
-          this.energiaActual = this.energiaActual - this.preciosCientificos[2];
+          this.energiaActual = this.energiaActual - this.cientificos[2].precio;
     
           this.addMultiplicadorXsegundo(15);
           
@@ -157,10 +158,10 @@ declare function openHelp(): any;
 
       comprarTuring(){
     
-        if (this.energiaActual >= this.preciosCientificos[3]){
+        if (this.energiaActual >= this.cientificos[3].precio){
     
           //Restar el precio de la compra
-          this.energiaActual = this.energiaActual - this.preciosCientificos[3];
+          this.energiaActual = this.energiaActual - this.cientificos[3].precio;
     
           this.addMultiplicadorXsegundo(20);
         
@@ -178,33 +179,72 @@ declare function openHelp(): any;
         
       }
 
-      getCentefico(){
-        
-        this.httpClient.get('https://gameserver.centic.ovh/items?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXNwbGF5bmFtZSI6InVjYW0yIiwiZ2FtZSI6InVjYW0yIiwidXNlcm5hbWUiOiJ1Y2FtMiIsImlhdCI6MTU4Mzc3NzU5Nn0.IuHEXQ1fSHJuGdqo-POT8TEVY38U5UOC_bIy61ldcRI',)
-        .subscribe(
-          (data:any[]) => {
-            
-            
-           for(let i = 0; i<data.length; i++){
-            
-            this.nombreCientifico[i] = data[i].nombre;
-            this.descCientifico[i] = data[i].descripcion;
-            this.rutaImagen[i] = this.ruta.concat(data[i].imagen).toString();
-            this.energiasCientificos[i] = data[i].energia;
-            this.preciosCientificos[i] = data[i].precio;
-
-            }
-          }     
-        )
-    
-    
+      abrirPagina(nombrePagina:string):void{
+        this.rutaGanar.navigate([`${nombrePagina}`]);  //Funciona como es debido
+        this.foundganar=true;
+        this.esconder=true;
       }
 
+      ganar(){
+        this.abrirPagina('Ganar');
+      }
+    
+      getCientifico(){
+            
+        
+        this.clickerService.getCientificos()
+        .subscribe(
+          resp => {
+            console.log(resp);
+            const keys = resp.headers.keys();
+            this.headers = keys.map(key =>
+              `${key}: ${resp.headers.get(key)}`);
+              let i = 0;
+            for (const data of resp.body) {
+                this.cientificos[i]  = new Cientifico(i, data.nombre, data.descripcion, this.ruta.concat(data.imagen).toString(), data.energia, data.precio);
+                i++;
+            }
+
+
+
+          }
+          )
+
+    console.log(this.cientificos);
+
+    }
+
+
+    getPuntos(){
+    
+      this.route.queryParams.subscribe(params => {
+        this.validation = params['validation'];
+        this.invitation = params['invitation'];
+    });
+
+      this.finJuego = false;
+      this.clickerService.getPuntos(this.validation, this.invitation, this.puntos)
+      .subscribe(
+        (data:any) => {
+  
+          console.log(data);
+
+  
+            this.finJuego = true;
+            this.abrirPagina('Victoria');
+
+  
+        }     
+      )
+      
+}
+
+      /*
       getPuntos(){
     
         /********************* */
             //CODIGO CORRECTO, DESCOMENTAR CUANDO SE SUBA AL SERVIDOR
-        /********************* */
+        /********************* 
             
             //Cojo el validation de la URL
             this.route.queryParams.subscribe(params => {
@@ -223,7 +263,7 @@ declare function openHelp(): any;
           'message': 'Como has jugado al juego dle TCM has recibido puntos por ello'
           
         }
-            );*/
+            );
         
             this.finJuego = false;
             this.httpClient.post('https://gameserver.centic.ovh/games/send_points', {
@@ -252,10 +292,11 @@ declare function openHelp(): any;
             )
            
         
-        /*************** */
+        /*************** 
         //FIN DEL CODIGO CORRECTO, CONTINUA EL CODIGO PLACEHOLDER
-        /****************** */
+        /****************** 
           }
+    */      
     /*
       getPuntos(){
     
@@ -280,6 +321,8 @@ declare function openHelp(): any;
         )
       }
       */
-      
-      
+      ngOnInit(){
+        this.getCientifico();
+      }
+    
   }

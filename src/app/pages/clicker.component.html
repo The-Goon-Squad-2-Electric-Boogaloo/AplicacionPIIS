@@ -1,183 +1,172 @@
-<html>
-<head>
+<body>
 
+  <div *ngIf="!esconder">
 
-  </head>
- 
-<body class="centrartodo">
+  <div class="fondo">
 
-  
-  
-<!--  <div class="container-fluid"> //temporizador
-    <div class="row">
-      <div class="col-xs-3">
-        <div *ngIf="!finJuego">
-          <h6>
-          Tiempo restante</h6>
-          
-          <h3 class="rojo"> {{minutos}}:{{segundos}} </h3>
-          </div>
-      
-          <div *ngIf="finJuego">
-              <span>Fin del juego, has ganado {{puntos}} puntos</span>
-              
-          </div>
-      </div>
-    
+  <section class="lateral">
+
+    <div class="form-group">
+      Energia
+      <div class="panelblanco" class="form-control">{{energiaActual}}</div>
+
+        <div class="centrarL">
+          <div class="titulo"><b>¡Púlsame!</b></div>
+        <button class = "electron" (click)="addEnergia()"></button></div>
     </div>
-  </div> -->
-  <div class="col-sm-5 col-md-5"></div>
-      <div  class="col-md-2 col-sm-2 ">
-        <button  (click)="help()" class = "help"></button>
-        <br class="help">
+
+
+    <section class="flotatop">
+
+      <button class="btn" (click)="mejorarClicker()">Fibonacci ({{preciosFibonacci[indexPrecioActual]}} de energia)</button>
+      <div *ngIf="!einsteinComprado">
+        <button class="btn" (click)="comprarEinstein()">{{cientificos[0].nombre}} ({{cientificos[0].precio}} de energía)</button>
       </div>
- 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-5 col-md-5"></div>
-      <div  class="col-md-2 col-sm-2 ">
-        <button  (click)="addEnergia()" class = "electron"></button>
-        <br class="electron">
-        Tienes <span> {{energiaActual}} unidades de energía</span>
-      </div>
-   
-    </div>
-  </div>
-<br>
- <div>
-      Mejoras Actuales:
-      <br>
+  
       <div *ngIf="einsteinComprado">
-          
-          Mejora de Einstein ---> {{energiasCientificos[0]}} Energía/Segundo
-          <br>
-          
+        <div *ngIf="!newtonComprado">
+          <button class="btn" (click)="comprarNewton()">{{cientificos[1].nombre}} ({{cientificos[1].precio}} de energía)</button>
+        </div>
       </div>
+  
       <div *ngIf="newtonComprado">
-          
-          Mejora de Newton ---> {{energiasCientificos[1]}} Energía/Segundo
-          <br>
-          
+        <div *ngIf="!teslaComprado">
+          <button class="btn" (click)="comprarTesla()">{{cientificos[2].nombre}} ({{cientificos[2].precio}} de energía)</button>
+        </div>
       </div>
+      
+  
       <div *ngIf="teslaComprado">
-          
-        Mejora de Tesla ---> {{energiasCientificos[2]}} Energía/Segundo
-        <br>
-        
-    </div>
-
-    <div *ngIf="turingComprado">
-          
-      Mejora de Turing ---> {{energiasCientificos[3]}} Energía/Segundo
-      <br>
-      
-  </div>
-  
+        <div *ngIf="!turingComprado">
+          <button class="btn" (click)="comprarTuring()">{{cientificos[3].nombre}} ({{cientificos[3].precio}} de energía)</button>
+        </div>
       </div>
-  
-      <br>
-      <br>
       
-
-    Generación por clic: {{energiaXClicActual}} energia
-    <br>
-    Generación automática actual: {{multiplicadorTotal}} energia
-
-    <br>
-    <br>
+  
+    </section>
+  </section>
 
 
-    Si compras una mejora Fibonacci cada clic generará mas energía
-    <br>
-    Precio: {{preciosFibonacci[indexPrecioActual]}} de energía
-    <br>
+
+  <section class="principal">
 
 
-    <button class="open-button" (click)="mejorarClicker()"> Comprar Clicker Fibonacci</button>
 
-    <br>
-    <br>
-    <br>
+    <form>
+      <div class="form-group">
+        <label class="center-block">
+          
 
-    <div *ngIf="!einsteinComprado">
-    Si compras a {{nombreCientifico[0]}} te vamos a dar {{energiasCientificos[0]}} de energía por segundo
-    <br>
-    Precio: {{preciosCientificos[0]}} de energía
-    <br>
+          <!--/////////////////////////// EMPIEZA MEJORAS ///////////////////////////////////-->
+          Mejoras actuales
 
-    <button class="open-button" (click)="comprarEinstein()"> Comprar a {{nombreCientifico[0]}}</button>
-    </div>
+          <div class="panelblanco" class="form-control">
 
+            Fibonacci -> {{energiaXClicActual}} E/click
+            <br>
+            
+          </div>
 
-    <div *ngIf="einsteinComprado">
-    <div *ngIf="!newtonComprado">
-        Si compras a {{nombreCientifico[1]}} te vamos a dar {{energiasCientificos[1]}} de energía por segundo
-        <br>
-        Precio: {{preciosCientificos[1]}} de energía
-        <br>
+          <div *ngIf="einsteinComprado">
+            <div class="panelblanco" class="form-control">  
+            
+              {{cientificos[0].nombre}} -> {{cientificos[0].energia}} E/s
+              <br>
+              
+            </div>
+          </div>
 
+          <div *ngIf="newtonComprado">
+            <div class="panelblanco" class="form-control">
+
+              {{cientificos[1].nombre}} -> {{cientificos[1].energia}} E/s
+              <br>
+              
+            </div>
+          </div>
+
+          
+          <div *ngIf="teslaComprado">
+            <div class="panelblanco" class="form-control">
+              
+              {{cientificos[2].nombre}} -> {{cientificos[2].energia}} E/s
+              <br>
+
+            </div>
+          </div>
     
-        <button class="open-button" (click)="comprarNewton()"> Comprar a {{nombreCientifico[1]}}</button>
+          <div *ngIf="turingComprado">
+            <div class="panelblanco" class="form-control">
+              
+              {{cientificos[3].nombre}} -> {{cientificos[3].energia}} E/s
+              <br>
+
+            </div>
+          </div>
+          <!--/////////////////////////// ACABA MEJORAS ///////////////////////////////////-->
+          
+          
+        </label>
       </div>
+    </form>
+
+
+    <div class="col-md-12" style="margin-top: -5px; margin-bottom: -15px;">
+            
+      <div class="row">
+        <td>
+          <button class="help" style="margin-left: 30px;" (click)="help();"></button>
+          <button class="btn" style="margin-left: 50px; margin-top: -30px;" (click)="getPuntos()"><b>Terminar juego</b></button>
+        </td>
+      </div>
+
     </div>
-    <div *ngIf="newtonComprado">
-    <div *ngIf="!teslaComprado">
-      Si compras a {{nombreCientifico[2]}} te vamos a dar {{energiasCientificos[2]}} de energía por segundo
-      <br>
-      Precio: {{preciosCientificos[2]}} de energía
-      <br>
+
+    <br>
+ 
+
+  </section>
+
   
-      <button class="open-button" (click)="comprarTesla()"> Comprar a {{nombreCientifico[2]}}</button>
-    </div>
-    </div>
-    <div *ngIf="teslaComprado">
-    <div *ngIf="!turingComprado">
-      Si compras a {{nombreCientifico[3]}} te vamos a dar {{energiasCientificos[3]}} de energía por segundo
-      <br>
-      Precio: {{preciosCientificos[3]}} de energía
-      <br>
-      <button class="open-button" (click)="comprarTuring()"> Comprar a {{nombreCientifico[3]}}</button>
-    </div>
-    </div>
-    <div *ngIf="turingComprado">
-      No quedan mas cientificos! Pulsa terminar el juego para acabar.
-      
-    </div>
-    
-        <br>
-        <br>
-        <br>
-    <button (click)="getPuntos()">Terminar juego</button>
-   
-<!--
-    <button class="open-button" (click)="addMultiplicadorXsegundo(5)"> Añadir 5 por segundo</button>
+  <!--//////////////////////////////////////////////////////////////////////////////////////-->
 
-    <br>
-    <br>
-    <br>
 
-    <div class="open-btn">
-        <button class="open-button" (click)="comprarEinstein()"><strong>Comprar cientifico</strong></button>
-      </div>-->
-
-      <div class="popupHelp">
+      <div class="popup">
         <div class="form-popup" id="helpForm">
           <form action="/action_page.php" class="form-container">
             <h5>Cómo jugar:</h5>
             <label for="email">
-            <!-- <img class = "imagen" src="/assets/help.png"> -->
+             <img class = "imagen" src="/assets/help.png"> 
             <br>
-              El juego está basado en la obtención de energía. <br>
-              Para ello, tenemos dos modos: <br>
-              <ol type=”A”>
-                <li>Hacer clic en el botón del centro de la pantalla (icono de electrón).</li>
-                <li>Comprar mejoras para adquirir energía de manera automática (hacer clic en el botón del científico correspondiente). </li>
-                </ol>
-                El objetivo final del juego es conseguir todas las mejoras (comprar todos los científicos). <br>
-                Para poder avanzar en el juego necesitamos ir adquiriendo energía con la que poder desbloquear los sucesivos científicos. <br><br>
-                Salu2 del Staff.
+
+            <textarea class="textarea" disabled="disabled" rows="7" cols="35">
+Tenemos dos formas de conseguir energia:
+- Hacer clic en el botón del centro de la pantalla (icono de electrón).
+- Comprar mejoras para adquirir energía de manera automática (hacer clic en el botón del científico correspondiente).
+
+El objetivo final del juego es comprar todos los científicos.
+            </textarea>
+            <br>
             </label>
-            <button type="button" class="btn cancel" onclick="closeHelp()">Close</button>
+            <button type="button" style="margin-bottom: -10px;" class="btn cancel" onclick="closeHelp()">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popupHelp">
+        <div class="form-popup" id="ganaste">
+          <form action="/action_page.php" class="form-container">
+            <h5 style="text-align: center;">Enhorabuena</h5>
+            <label for="email">
+             <img class = "imagen" src="/assets/help.png"> 
+            <br>
+              <br>
+
+                Enhorabuena has completado el juego!
+              
+                <br>
+            </label>
+            <button type="button" style="margin-bottom: -10px;" class="btn cancel" onclick="closeGanaste()">Close</button>
           </form>
         </div>
       </div>
@@ -191,25 +180,34 @@
             <img class = "imagen" src="/assets/fibonacci.jpg">
             <br>
             <br>
-            Fibonacci fue un matemático, conocido mayormente por La sucesión de Fibonacci:<br> n = (n-2)+(n-1). <br>
-            Ejemplo: 0, 1, 1, 2, 3, 5, 8, 13... <br>
-            Esta sucesión de Finocci está presente en la naturaleza. Como por ejemplo en la disposición de los huracanes, de los girasoles o el caparazón del caracol entre otros.<br>
-            Cada mejora de Fibonacci que compres hará que tus clics generen energía siguiendo la sucesión.
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">Fibonacci fue un matemático, conocido mayormente por La sucesión de Fibonacci: 
+                n = (n-2)+(n-1).
+                Ejemplo: 0, 1, 1, 2, 3, 5, 8, 13...
+Esta sucesión de Finocci está presente en la naturaleza. Como por ejemplo en la disposición de los huracanes, de los girasoles o el caparazón del caracol entre otros.</textarea><br>
+            </div>
+              
           </label>
             <button type="button" class="btn cancel" onclick="closeFibonacci()">Close</button>
           </form>
         </div>
       </div>
 
-    <div class="popup">
+      <div class="popup">
         <div class="form-popup" id="einsteinForm">
           <form action="/action_page.php" class="form-container">
-            <h5>Cientifico: {{nombreCientifico[0]}}</h5>
+            <h5>Cientifico: {{cientificos[0].nombre}}</h5>
             <label for="email">
-            <img class = "imagen" [src]='rutaImagen[0]'>
+            <img class = "imagen" [src]='cientificos[0].imagen'>
             <br>
             <br>
-                {{descCientifico[0]}}
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[0].descripcion}}</textarea>
+            </div>
+
+
             </label>
             <button type="button" class="btn cancel" onclick="closeEinstein()">Close</button>
           </form>
@@ -219,12 +217,16 @@
       <div class="popup">
         <div class="form-popup" id="newtonForm">
           <form action="/action_page.php" class="form-container">
-            <h5>Cientifico: {{nombreCientifico[1]}}</h5>
+            <h5>Cientifico: {{cientificos[1].nombre}}</h5>
             <label for="email">
-            <img class = "imagen" [src]='rutaImagen[1]'>
+            <img class = "imagen" [src]='cientificos[1].imagen'>
             <br>
             <br>
-                {{descCientifico[1]}}
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[1].descripcion}}</textarea>
+            </div>
+
             </label>
             <button type="button" class="btn cancel" onclick="closeNewton()">Close</button>
           </form>
@@ -234,12 +236,16 @@
       <div class="popup">
         <div class="form-popup" id="teslaForm">
           <form action="/action_page.php" class="form-container">
-            <h5>Cientifico: {{nombreCientifico[2]}}</h5>
+            <h5>Cientifico: {{cientificos[2].nombre}}</h5>
             <label for="email">
-            <img class = "imagen" [src]='rutaImagen[2]'>
+            <img class = "imagen" [src]='cientificos[2].imagen'>
             <br>
             <br>
-                {{descCientifico[2]}}
+                
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[2].descripcion}}</textarea>
+            </div>
+
             </label>
             <button type="button" class="btn cancel" onclick="closeTesla()">Close</button>
           </form>
@@ -249,18 +255,30 @@
       <div class="popup">
         <div class="form-popup" id="turingForm">
           <form action="/action_page.php" class="form-container">
-            <h5>Cientifico: {{nombreCientifico[3]}}</h5>
+            <h5>Cientifico: {{cientificos[3].nombre}}</h5>
             <label for="email">
-            <img class = "imagen" [src]="rutaImagen[3]">
+            <img class = "imagen" [src]="cientificos[3].imagen">
             <br>
             <br>
             
-            {{descCientifico[3]}}
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[3].descripcion}}</textarea>
+            </div>
+
             </label>
             <button type="button" class="btn cancel" onclick="closeTuring()">Close</button>
           </form>
         </div>
       </div>
 
+  </div>
+
+
+</div>
+
+<div *ngIf="foundganar">
+  <router-outlet></router-outlet>
+</div>
+
+
 </body>
-</html>

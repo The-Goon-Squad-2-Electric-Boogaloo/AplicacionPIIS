@@ -1,3 +1,4 @@
+
 .electron { 
     width: 173px;
     margin-left: 3%;
@@ -10,30 +11,121 @@
 
 .help { 
     width: 50px;
-    margin-left: 90%;
     height: 50px;
     background-image: url(/assets/help.png);
     background-size: cover;
 }
 
+/*///////////////////////////////////////////////////////////////////////////////////////////////*/
 
+.form-group{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .form-control{
+    width: 90%;
+  }
+  
+  textarea{
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 5px;
+    resize: none;
+  }
+  
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(168, 168, 168);
+  }
+
+  .center-block{
+    width: 100%;
+  }
+  
+  .panelblanco{
+  background-color: white;
+  border-radius: 5px;
+  }
+  
+  .campoLateral{
+    margin-top: 5px;
+  }
+
+  .campoFinal{
+    margin-top: 7%;
+  }
+  
+  
+  .btn{
+    background-color: rgb(210, 219, 233);
+    box-shadow: 1px 2px;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  
+  
+  .login{
+    background-color: rgb(194, 203, 219);
+    box-shadow: 2px 3px;
+    border-radius: 10px;
+    margin-left: 30%;
+    margin-right: 30%;
+    width: 35%;
+  }
+  
+  .flotatop{
+    margin-left: 10%;
+  }
+  
+  .principal{
+    background-color: rgb(194, 203, 219);
+    /*background-image: url(/assets/cristo.jpg);*/
+    box-shadow: 2px 3px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-left: 10%;
+    margin-right: 10%;
+    float: left;
+    width: 80%;
+  }
+  
+  .lateral{
+    background-color: rgb(194, 203, 219);
+    /*background-image: url(/assets/cristo.jpg);*/
+    box-shadow: 2px 3px;
+    border-radius: 10px;
+    margin-top: 70px;
+    margin-left: 10%;
+    margin-right: 10%;
+    float: left; 
+    width: 80%;
+  }
+
+  .centrarL{
+    margin-left: 18%;
+    margin-right: 18%;
+  }
+  .centrarLBoton{
+    margin-left: 22%;
+    margin-right: 22%;
+    width: 100%;
+  }
+  
+  .titulo{
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////*/
 
 *{
     box-sizing: border-box;
     }
-    body {
-        background-image: url("../imagenes/1.jpg");
-        
-    font-family: 'Pacifico', cursive;
     
-        
-}
-    /* Fix the button on the left side of the page */
-    .open-btn {
-      
-    display: flex;
-    justify-content: left;
-    }
     /* Style and fix the button on the page */
     .open-button {
     background-color: #7bcdb7;
@@ -110,25 +202,18 @@
     }
     
     .imagen{
-        display: block;
+    display: block;
     border-radius: 50%;
     width: 150px;
     height: auto;
     margin-left: auto;
     margin-right: auto;
     }
+
     .centro{
         align-items: center;
-        }
-    .centrartodo{
-                padding-left: 20%;
-                padding-right: 20%;
+    }
 
-
-
-        }
-        .rojo{
-            color:red !important;
-           
-            
-        }
+    .rojo{
+         color:red !important;   
+    }

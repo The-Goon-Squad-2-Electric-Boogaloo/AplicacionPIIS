@@ -4,10 +4,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClickerComponent } from './clicker.component';
 import {HttpClientModule} from '@angular/common/http';
+import { PantallaVictoriaComponent } from './pantalla-victoria/pantalla-victoria.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ClickerComponent
+    ClickerComponent,
+    PantallaVictoriaComponent
   ],
   imports: [
     BrowserModule,
