@@ -1,0 +1,280 @@
+<body>
+
+  <div *ngIf="!esconder">
+
+  <div class="fondo">
+
+  <section class="lateral">
+
+    <!-- En este div, se muestran la energia actual de usuario llamando a la variable del componente-->
+    <div class="form-group">
+      Energia
+      <div class="panelblanco" class="form-control">{{energiaActual}}</div>
+
+        <div class="centrarL">
+          <div class="titulo"><b>¡Púlsame!</b></div>
+          <!--Cada vez que se hace click, se llama a la funcion que añade la energia a energiaActual, segun la generacion por click que tenga el jugador-->
+        <button class = "electron" (click)="addEnergia()"></button></div>
+    </div>
+
+<!-- En esta seccion se muestran varias cosas:
+  Primeramente se muestra un boton donde se puede hacer la mejora de fibonacci
+  Despues, se muestra un cientifico segun si se ha comprado los demas por ejemplo:
+  Si no has comprado Einstein, se muestra Einstein.
+  Si lo has comprado, se muestra newton, que es el siguiente en el array,
+  si has comprado los dos anteriores, se mostrara el tercero y asi sucesivamente.
+-->
+    <section class="flotatop">
+
+      <button class="btn" (click)="mejorarClicker()">Fibonacci ({{preciosFibonacci[indexPrecioActual]}} de energia)</button>
+      <div *ngIf="!cientifico0Comprado">
+        <button class="btn" (click)="comprarCientifico0()">{{cientificos[0].nombre}} ({{cientificos[0].precio}} de energía)</button>
+      </div>
+  
+      <div *ngIf="cientifico0Comprado">
+        <div *ngIf="!cientifico1Comprado">
+          <button class="btn" (click)="comprarCientifico1()">{{cientificos[1].nombre}} ({{cientificos[1].precio}} de energía)</button>
+        </div>
+      </div>
+  
+      <div *ngIf="cientifico1Comprado">
+        <div *ngIf="!cientifico2Comprado">
+          <button class="btn" (click)="compraroCientifco2()">{{cientificos[2].nombre}} ({{cientificos[2].precio}} de energía)</button>
+        </div>
+      </div>
+      
+  
+      <div *ngIf="cientifico2Comprado">
+        <div *ngIf="!cientifico3Comprado">
+          <button class="btn" (click)="comprarCientifico3()">{{cientificos[3].nombre}} ({{cientificos[3].precio}} de energía)</button>
+        </div>
+      </div>
+      
+  
+    </section>
+  </section>
+
+
+
+  <section class="principal">
+
+
+
+    <form>
+      <div class="form-group">
+        <label class="center-block">
+          
+
+          <!--Se muestran las mejoras actuales que posee el jugador, se muestran segun los token que indican si se han comprado o no. Tanto el nombre
+          Como la energia que generan por segundo de cada cientifico, estan guardadas en variables dentro de un array de cientificos.-->
+          Mejoras actuales
+
+          <div class="panelblanco" class="form-control">
+
+            Fibonacci -> {{energiaXClicActual}} E/click
+            <br>
+            
+          </div>
+
+          <div *ngIf="cientifico0Comprado">
+            <div class="panelblanco" class="form-control">  
+            
+              {{cientificos[0].nombre}} -> {{cientificos[0].energia}} E/s
+              <br>
+              
+            </div>
+          </div>
+
+          <div *ngIf="cientifico1Comprado">
+            <div class="panelblanco" class="form-control">
+
+              {{cientificos[1].nombre}} -> {{cientificos[1].energia}} E/s
+              <br>
+              
+            </div>
+          </div>
+
+          
+          <div *ngIf="cientifico2Comprado">
+            <div class="panelblanco" class="form-control">
+              
+              {{cientificos[2].nombre}} -> {{cientificos[2].energia}} E/s
+              <br>
+
+            </div>
+          </div>
+    
+          <div *ngIf="cientifico3Comprado">
+            <div class="panelblanco" class="form-control">
+              
+              {{cientificos[3].nombre}} -> {{cientificos[3].energia}} E/s
+              <br>
+
+            </div>
+          </div>
+        
+          
+          
+        </label>
+      </div>
+    </form>
+
+
+    <div class="col-md-12" style="margin-top: -5px; margin-bottom: -15px;">
+            
+      <div class="row">
+        <td>
+          <!-- Botones de ayuda y de terminar el juego. En el boton de terminar juego se llama a la fucion que hace la peticion de send points y 
+          el token foundGanar coge el valor true, por lo que se carga el html pantalla-victoria.component.spec.ts-->
+          <button class="help" style="margin-left: 30px;" (click)="help();"></button>
+          <button class="btn" style="margin-left: 50px; margin-top: -30px;" (click)="getPuntos()"><b>Terminar juego</b></button>
+        </td>
+      </div>
+
+    </div>
+
+    <br>
+ 
+
+  </section>
+  
+  
+  <!--Aqui estan los pop-ups que se muestran segun compras cientificos o pulsas el boton de ayuda.-->
+
+<!--Pop up de ayuda-->
+      <div class="popupHelp">
+        <div class="form-popup" id="helpForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cómo jugar:</h5>
+            <label for="email">
+             <img class = "imagen" src="/assets/help.png"> 
+            <br>
+
+            <textarea class="textarea" disabled="disabled" rows="7" cols="35">
+Tenemos dos formas de conseguir energia:
+- Hacer clic en el botón del centro de la pantalla (icono de electrón).
+- Comprar mejoras para adquirir energía de manera automática (hacer clic en el botón del científico correspondiente).
+
+El objetivo final del juego es comprar todos los científicos.
+            </textarea>
+            <br>
+            </label>
+            <button type="button" style="margin-bottom: -10px;" class="btn cancel" onclick="closeHelp()">Close</button>
+          </form>
+        </div>
+      </div>
+
+     
+<!--Pop up de fibonacci, este pop-up es estatico, no coge nada de los cientificos cargados en el postman-->
+      <div class="popup">
+        <div class="form-popup" id="fibonacciForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cientifico: Leonardo de Pisa (Fibonacci)</h5>
+            <label for="email">
+            <img class = "imagen" src="/assets/fibonacci.jpg">
+            <br>
+            <br>
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">Fibonacci fue un matemático, conocido mayormente por La sucesión de Fibonacci: 
+                n = (n-2)+(n-1).
+                Ejemplo: 0, 1, 1, 2, 3, 5, 8, 13...
+Esta sucesión de Finocci está presente en la naturaleza. Como por ejemplo en la disposición de los huracanes, de los girasoles o el caparazón del caracol entre otros.</textarea><br>
+            </div>
+              
+          </label>
+            <button type="button" class="btn cancel" onclick="closeFibonacci()">Close</button>
+          </form>
+        </div>
+      </div>
+<!-- A partir de aqui estan los popup de los cientificos cargados mediante el postman. Todo se carga mediante variables de cada cientifico guardado en el
+     array de cientificos.-->
+      <div class="popup">
+        <div class="form-popup" id="einsteinForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cientifico: {{cientificos[0].nombre}}</h5>
+            <label for="email">
+            <img class = "imagen" [src]='cientificos[0].imagen'>
+            <br>
+            <br>
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[0].descripcion}}</textarea>
+            </div>
+
+
+            </label>
+            <button type="button" class="btn cancel" onclick="closeCientifico0()">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup">
+        <div class="form-popup" id="newtonForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cientifico: {{cientificos[1].nombre}}</h5>
+            <label for="email">
+            <img class = "imagen" [src]='cientificos[1].imagen'>
+            <br>
+            <br>
+
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[1].descripcion}}</textarea>
+            </div>
+
+            </label>
+            <button type="button" class="btn cancel" onclick="closeCientifico1()">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup">
+        <div class="form-popup" id="teslaForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cientifico: {{cientificos[2].nombre}}</h5>
+            <label for="email">
+            <img class = "imagen" [src]='cientificos[2].imagen'>
+            <br>
+            <br>
+                
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[2].descripcion}}</textarea>
+            </div>
+
+            </label>
+            <button type="button" class="btn cancel" onclick="closeCientifico2()">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup">
+        <div class="form-popup" id="turingForm">
+          <form action="/action_page.php" class="form-container">
+            <h5>Cientifico: {{cientificos[3].nombre}}</h5>
+            <label for="email">
+            <img class = "imagen" [src]="cientificos[3].imagen">
+            <br>
+            <br>
+            
+            <div class="campoLateral">
+              <textarea class="textarea" disabled="disabled" rows="7" cols="35">{{cientificos[3].descripcion}}</textarea>
+            </div>
+
+            </label>
+            <button type="button" class="btn cancel" (click)="todosComprados()">Close</button>
+          </form>
+        </div>
+      </div>
+
+  </div>
+
+
+</div>
+
+<!-- Cuando este token tiene el valor true, se cargara el html pantalla-victoria.component.spec.ts-->
+<div *ngIf="foundganar">
+  <router-outlet></router-outlet>
+</div>
+
+
+</body>
